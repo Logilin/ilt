@@ -1,0 +1,36 @@
+#! /bin/sh
+
+FILE="/sys/class/leds/led0/trigger"
+
+if [ "$QUERY_STRING" = "on" ]
+then
+	echo "default-on" > "${FILE}"
+elif [ "$QUERY_STRING" = "heartbeat" ]
+then
+	echo "heartbeat"  > "${FILE}"
+elif [ "$QUERY_STRING" = "timer" ]
+then
+	echo "timer"      > "${FILE}"
+elif [ "$QUERY_STRING" = "mmc" ]
+then
+	echo "mmc0"       > "${FILE}"
+else
+	echo "none"       > "${FILE}"
+fi
+
+printf '\r\n\r\n'
+printf '<HTML>'
+printf '<HEAD><TITLE>Led Trigger Configuration</TITLE></HEAD>'
+printf '<BODY style="background: #D0F0D0; color: #402040;">'
+printf '<H1 style="padding: 20px;">Led trigger configuration</H1>'
+printf '<UL>'
+printf '<LI><A STYLE="color: inherit; font-weight: bold;" HREF="/cgi-bin/set-led-trigger?on">On</A></LI>'
+printf '<LI><A STYLE="color: inherit; font-weight: bold;" HREF="/cgi-bin/set-led-trigger?off">Off</A></LI>'
+printf '<LI><A STYLE="color: inherit; font-weight: bold;" HREF="/cgi-bin/set-led-trigger?timer">Timer</A></LI>'
+printf '<LI><A STYLE="color: inherit; font-weight: bold;" HREF="/cgi-bin/set-led-trigger?heartbeat">Heartbeat</A></LI>'
+printf '<LI><A STYLE="color: inherit; font-weight: bold;" HREF="/cgi-bin/set-led-trigger?mmc">SD card</A></LI>'
+printf '</UL>'
+printf '<HR/>'
+printf '<A HREF="/scripts.html">Back</a>'
+printf '</BODY>'
+printf '</HTML>'

@@ -1,0 +1,44 @@
+#! /bin/sh
+
+printf "\r\n\r\n"
+
+printf '<HTML>'
+printf '<HEAD>'
+printf ' <title>System informations</title>'
+printf ' <meta http-equiv="refresh" content="5" />'
+printf '</head>\r\n'
+
+printf '<BODY style="background: #D0FFFF; color: #002040;">'
+
+printf '<B>System</B><BR/>\r\n'
+printf '<PRE>'
+uname -a
+printf '</PRE>\r\n'
+
+printf '<B>Date</B><BR/>\r\n'
+printf '<pre>'
+date
+printf '</pre>'
+
+printf '<B>Temperature</B><BR/>'
+printf '<PRE>'
+sed -e 's/^\(..\)\(...\)/\1.\2\&deg;C/' /sys/class/thermal/thermal_zone0/temp
+printf '</PRE>'
+
+printf '<B>Uptime</B><BR/>\r\n'
+printf '<PRE>'
+uptime
+printf '</PRE>\r\n'
+
+printf '<B>Processes</B><BR/>'
+printf '<PRE>'
+ps
+printf '</PRE>\r\n'
+
+echo '<HR/>'
+echo '<A HREF="/scripts.html">Back</a>'
+echo '</BODY>'
+echo '</HTML>'
+
+
+

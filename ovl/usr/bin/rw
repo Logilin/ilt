@@ -1,0 +1,4 @@
+#! /bin/sh
+
+mount / -o rw,remount
+
