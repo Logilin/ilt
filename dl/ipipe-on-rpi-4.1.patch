@@ -1,21 +1,18 @@
-diff --git a/arch/arm/Kconfig b/arch/arm/Kconfig
-index 5b894d6..d9a61ca 100644
---- a/arch/arm/Kconfig
-+++ b/arch/arm/Kconfig
-@@ -348,6 +348,7 @@ config ARCH_BCM2709
+diff -ruN a/arch/arm/Kconfig b/arch/arm/Kconfig
+--- a/arch/arm/Kconfig	2018-06-13 11:06:38.087564102 +0200
++++ b/arch/arm/Kconfig	2018-06-13 16:12:54.614994553 +0200
+@@ -348,6 +348,7 @@
  	select MACH_BCM2709
  	select VC4
  	select FIQ
 +	select IPIPE_ARM_KUSER_TSC if IPIPE
  	help
  	  This enables support for Broadcom BCM2709 boards.
-
-diff --git a/arch/arm/mach-bcm2709/armctrl.c
-b/arch/arm/mach-bcm2709/armctrl.c
-index 90805a6..2e681d0 100644
---- a/arch/arm/mach-bcm2709/armctrl.c
-+++ b/arch/arm/mach-bcm2709/armctrl.c
-@@ -348,6 +348,10 @@ static struct irq_chip armctrl_chip = {
+ 
+diff -ruN a/arch/arm/mach-bcm2709/armctrl.c b/arch/arm/mach-bcm2709/armctrl.c
+--- a/arch/arm/mach-bcm2709/armctrl.c	2018-06-13 11:06:46.839495025 +0200
++++ b/arch/arm/mach-bcm2709/armctrl.c	2018-06-13 16:12:54.618994521 +0200
+@@ -348,6 +348,10 @@
  	.irq_mask = armctrl_mask_irq,
  	.irq_unmask = armctrl_unmask_irq,
  	.irq_set_wake = armctrl_set_wake,
@@ -24,32 +21,30 @@ index 90805a6..2e681d0 100644
 +	.irq_release = armctrl_unmask_irq,
 +#endif
  };
-
+ 
  /**
-diff --git a/arch/arm/mach-bcm2709/bcm2708_gpio.c
-b/arch/arm/mach-bcm2709/bcm2708_gpio.c
-index e33265d..be827b4 100644
---- a/arch/arm/mach-bcm2709/bcm2708_gpio.c
-+++ b/arch/arm/mach-bcm2709/bcm2708_gpio.c
+diff -ruN a/arch/arm/mach-bcm2709/bcm2708_gpio.c b/arch/arm/mach-bcm2709/bcm2708_gpio.c
+--- a/arch/arm/mach-bcm2709/bcm2708_gpio.c	2018-06-13 11:06:46.839495025 +0200
++++ b/arch/arm/mach-bcm2709/bcm2708_gpio.c	2018-06-13 16:12:54.626994455 +0200
 @@ -24,6 +24,7 @@
  #include <linux/pinctrl/consumer.h>
-
+ 
  #include <linux/platform_data/bcm2708.h>
 +#include <linux/ipipe.h>
-
+ 
  #define BCM_GPIO_DRIVER_NAME "bcm2708_gpio"
  #define DRIVER_NAME BCM_GPIO_DRIVER_NAME
-@@ -56,7 +57,8 @@ enum { GPIO_FSEL_INPUT, GPIO_FSEL_OUTPUT,
+@@ -56,7 +57,8 @@
  	 * the GPIO code. This also makes the case of a GPIO routine call from
  	 * the IRQ code simpler.
  	 */
 -static DEFINE_SPINLOCK(lock);	/* GPIO registers */
 +static IPIPE_DEFINE_SPINLOCK(lock); /* GPIO registers */
 +
-
+ 
  struct bcm2708_gpio {
  	struct list_head list;
-@@ -294,7 +296,7 @@ static irqreturn_t bcm2708_gpio_interrupt(int irq, void *dev_id)
+@@ -294,7 +296,7 @@
  			if (!(level_bits & (1<<i)))
  				writel(1<<i,
  				       __io_address(GPIO_BASE) + GPIOEDS(bank));
@@ -58,12 +53,10 @@ index e33265d..be827b4 100644
  			/* ack level triggered IRQ after handling them */
  			if (level_bits & (1<<i))
  				writel(1<<i,
-diff --git a/arch/arm/mach-bcm2709/bcm2709.c
-b/arch/arm/mach-bcm2709/bcm2709.c
-index e1934dc..fc66fce 100644
---- a/arch/arm/mach-bcm2709/bcm2709.c
-+++ b/arch/arm/mach-bcm2709/bcm2709.c
-@@ -1104,11 +1104,13 @@ static void __init bcm2709_timer_init(void)
+diff -ruN a/arch/arm/mach-bcm2709/bcm2709.c b/arch/arm/mach-bcm2709/bcm2709.c
+--- a/arch/arm/mach-bcm2709/bcm2709.c	2018-06-13 11:06:46.839495025 +0200
++++ b/arch/arm/mach-bcm2709/bcm2709.c	2018-06-13 16:12:54.630994422 +0200
+@@ -1104,11 +1104,13 @@
  static void __init bcm2709_timer_init(void)
  {
  	extern void dc4_arch_timer_init(void);
@@ -74,10 +67,10 @@ index e1934dc..fc66fce 100644
  	writel(0x80000000, __io_address(ARM_LOCAL_PRESCALER)); // 19.2MHz
  	//writel(0x06AAAAAB, __io_address(ARM_LOCAL_PRESCALER)); // 1MHz
 +#endif
-
+ 
  	if (use_dt)
  	{
-@@ -1117,6 +1119,13 @@ static void __init bcm2709_timer_init(void)
+@@ -1117,6 +1119,13 @@
  	}
  	else
  		dc4_arch_timer_init();
@@ -89,13 +82,11 @@ index e1934dc..fc66fce 100644
 +	writel(0x80000000, __io_address(ARM_LOCAL_PRESCALER)); // 19.2MHz
 +#endif
  }
-
+ 
  #endif
-diff --git a/arch/arm/mach-bcm2709/include/mach/entry-macro.S
-b/arch/arm/mach-bcm2709/include/mach/entry-macro.S
-index 08d184c..53d3c46 100644
---- a/arch/arm/mach-bcm2709/include/mach/entry-macro.S
-+++ b/arch/arm/mach-bcm2709/include/mach/entry-macro.S
+diff -ruN a/arch/arm/mach-bcm2709/include/mach/entry-macro.S b/arch/arm/mach-bcm2709/include/mach/entry-macro.S
+--- a/arch/arm/mach-bcm2709/include/mach/entry-macro.S	2018-06-13 11:06:46.843494993 +0200
++++ b/arch/arm/mach-bcm2709/include/mach/entry-macro.S	2018-06-13 16:12:54.638994357 +0200
 @@ -52,8 +52,12 @@
  	dsb
  	mov	r1, sp
@@ -118,7 +109,39 @@ index 08d184c..53d3c46 100644
 +#else
  	b	asm_do_IRQ
 +#endif
-
+ 
  1020:	@ EQ will be set if no irqs pending
  	.endm
-
+diff -ruN a/drivers/char/broadcom/bcm2835_smi_dev.c b/drivers/char/broadcom/bcm2835_smi_dev.c
+--- a/drivers/char/broadcom/bcm2835_smi_dev.c	2018-06-13 11:11:35.593171917 +0200
++++ b/drivers/char/broadcom/bcm2835_smi_dev.c	2018-06-13 16:07:55.805442180 +0200
+@@ -63,12 +63,6 @@
+ static struct bcm2835_smi_instance *smi_inst;
+ static struct bcm2835_smi_dev_instance *inst;
+ 
+-static const char *const ioctl_names[] = {
+-	"READ_SETTINGS",
+-	"WRITE_SETTINGS",
+-	"ADDRESS"
+-};
+-
+ /****************************************************************************
+ *
+ *   SMI chardev file ops
+diff -ruN a/drivers/char/broadcom/vc_sm/vmcs_sm.c b/drivers/char/broadcom/vc_sm/vmcs_sm.c
+--- a/drivers/char/broadcom/vc_sm/vmcs_sm.c	2018-06-13 11:11:35.601171853 +0200
++++ b/drivers/char/broadcom/vc_sm/vmcs_sm.c	2018-06-13 16:06:10.074307456 +0200
+@@ -197,13 +197,6 @@
+ static struct SM_STATE_T *sm_state;
+ static int sm_inited;
+ 
+-static const char *const sm_cache_map_vector[] = {
+-	"(null)",
+-	"host",
+-	"videocore",
+-	"host+videocore",
+-};
+-
+ /* ---- Private Function Prototypes -------------------------------------- */
+ 
+ /* ---- Private Functions ------------------------------------------------ */
