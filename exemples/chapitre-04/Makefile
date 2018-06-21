@@ -18,6 +18,7 @@ APPLICATIONS:=              \
 	exemple-06          \
 	exemple-07          \
 	exemple-08          \
+	exemple-08-b        \
 	exemple-09          \
 	exemple-10          \
 	exemple-11          \
