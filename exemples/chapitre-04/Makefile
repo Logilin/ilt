@@ -1,3 +1,11 @@
+##############################################################################
+## Exemple de la formation "Temps-reel Linux et Xenomai"
+##
+## Christophe Blaess 2010-2018
+## http://christophe.blaess.fr
+## Licence GPLv2
+##############################################################################
+
 
 CROSS_COMPILE ?=
 
@@ -9,24 +17,26 @@ CFLAGS=-Wall -g -pthread
 LDFLAGS=-pthread
 LOADLIBES=-lrt
 
-APPLICATIONS:=              \
-	exemple-01          \
-	exemple-02          \
-	exemple-03          \
-	exemple-04          \
-	exemple-05          \
-	exemple-06          \
-	exemple-07          \
-	exemple-08          \
-	exemple-08-b        \
-	exemple-09          \
-	exemple-10          \
-	exemple-11          \
-	exemple-12          \
+
+EXE:=                 \
+  exemple-IV-01        \
+  exemple-IV-02        \
+  exemple-IV-03        \
+  exemple-IV-04        \
+  exemple-IV-05        \
+  exemple-IV-06        \
+  exemple-IV-07        \
+  exemple-IV-08        \
+  exemple-IV-09        \
+  exemple-IV-10        \
+  exemple-IV-11        \
 
 
-all: ${APPLICATIONS}
+.PHONY: all
+all: ${EXE}
 
+
+.PHONY: clean
 clean::
-	rm -f ${APPLICATIONS} *.o *~
-	
+	rm -f ${EXE} *.o *~
+
