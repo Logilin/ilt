@@ -43,9 +43,9 @@ int main(int argc, char * argv[])
 		exit(EXIT_FAILURE);
 	}
 
+	alarm(4);
 	sleep(1);
 	signal(SIGALRM, sigalrm_handler);
-	alarm(4);
 
 	counter = 0;
 	while (! _End_of_loop) {
