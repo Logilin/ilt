@@ -14,19 +14,20 @@
 #include <unistd.h>
 
 
+#define LOOPS 500000000
+
 pthread_barrier_t _Barrier;
 
 
 void * thread_function (void * unused)
 {
-	int i, j;
+	int i;
 	time_t debut, fin;
 
 	pthread_barrier_wait(&_Barrier);
 	debut = time(NULL);
-	for (i = 0; i < 100000; i ++)
-		for (j = 0; j < 10000; j ++)
-			;
+	for (i = 0; i < LOOPS; i ++)
+		;
 	fin = time(NULL);
 	fprintf(stderr, "%ld -> %ld\n", debut, fin);
 	return NULL;
