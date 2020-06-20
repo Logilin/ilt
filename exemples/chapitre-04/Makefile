@@ -1,7 +1,7 @@
 ##############################################################################
 ## Exemple de la formation "Temps-reel Linux et Xenomai"
 ##
-## Christophe Blaess 2010-2018
+## Christophe Blaess 2010-2020
 ## http://christophe.blaess.fr
 ## Licence GPLv2
 ##############################################################################
@@ -19,17 +19,17 @@ LOADLIBES=-lrt
 
 
 EXE:=                 \
-  exemple-IV-01        \
-  exemple-IV-02        \
-  exemple-IV-03        \
-  exemple-IV-04        \
-  exemple-IV-05        \
-  exemple-IV-06        \
-  exemple-IV-07        \
-  exemple-IV-08        \
-  exemple-IV-09        \
-  exemple-IV-10        \
-  exemple-IV-11        \
+  example-IV-01        \
+  example-IV-02        \
+  example-IV-03        \
+  example-IV-04        \
+  example-IV-05        \
+  example-IV-06        \
+  example-IV-07        \
+  example-IV-08        \
+  example-IV-09        \
+  example-IV-10        \
+  example-IV-11        \
 
 
 .PHONY: all

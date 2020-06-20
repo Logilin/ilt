@@ -1,48 +1,42 @@
 /****************************************************************************\
 ** Exemple de la formation "Temps-reel Linux et Xenomai"                    **
 **                                                                          **
-** Christophe Blaess 2010-2018                                              **
+** Christophe Blaess 2010-2020                                              **
 ** http://christophe.blaess.fr                                              **
 ** Licence GPLv2                                                            **
 \****************************************************************************/
 
 
-#include <pthread.h>
+#include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/mman.h>
 
 
-static int _Counter = 0;
-
-
-void *thread_function (void *arg)
+int main(int argc, char * argv[])
 {
-	long number = (long) arg;
+	int fd;
+	int * counter;
 
-	while (1) {
-		fprintf(stderr, "Thread %ld, counter = %d\n",
-		        number, _Counter);
-		sleep(1);
+	if (argc != 2) {
+		fprintf(stderr, "usage: %s shm_name\n", argv[0]);
+		exit(1);
 	}
-	return NULL;
-}
 
+	if ((fd = shm_open(argv[1], O_CREAT | O_RDWR, 0666)) < 0) {
+		perror(argv[1]);
+		exit(1);
+	}
 
-#define THREADS 5
+	ftruncate(fd, sizeof(int));
 
-
-int main(void)
-{
-	long i;
-	pthread_t thr[THREADS];
-
-	for (i = 0; i < THREADS; i ++)
-		pthread_create(&(thr[i]), NULL, thread_function, (void *)i);
-
-	while (1) {
-		fprintf(stderr, "Main : counter = %d\n", _Counter ++);
+	counter = mmap(NULL, sizeof(int), PROT_READ|PROT_WRITE,
+	                MAP_SHARED, fd, 0);
+	for (;;) {
+		fprintf(stderr, "counter = %d\n", *counter);
 		sleep(1);
+		(*counter) ++;
 	}
 	return 0;
 }

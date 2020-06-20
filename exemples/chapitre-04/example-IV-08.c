@@ -1,7 +1,7 @@
 /****************************************************************************\
 ** Exemple de la formation "Temps-reel Linux et Xenomai                     **
 **                                                                          **
-** Christophe Blaess 2012-2018                                              **
+** Christophe Blaess 2012-2020                                              **
 ** http://christophe.blaess.fr                                              **
 ** Licence GPLv2                                                            **
 \****************************************************************************/
@@ -18,7 +18,6 @@
 #define PROCESSES   4
 #define LOOPS       3
 
-
 int main(int argc, char * argv[])
 {
 	int i, j;
@@ -30,7 +29,6 @@ int main(int argc, char * argv[])
 		exit(EXIT_FAILURE);
 	}
 
-	// Lancement des processus.
 	for (i = 0; i < PROCESSES; i ++) {
 
 		pid[i] = fork();
@@ -55,7 +53,6 @@ int main(int argc, char * argv[])
 		}
 	}
 
-	// Attente de fin des processus enfants.
 	for (i = 0; i < PROCESSES; i ++)
 		waitpid(pid[i], NULL, 0);
 

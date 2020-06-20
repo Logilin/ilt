@@ -1,7 +1,7 @@
 /****************************************************************************\
 ** Exemple de la formation "Temps-reel Linux et Xenomai"                    **
 **                                                                          **
-** Christophe Blaess 2010-2018                                              **
+** Christophe Blaess 2010-2020                                              **
 ** http://christophe.blaess.fr                                              **
 ** Licence GPLv2                                                            **
 \****************************************************************************/
@@ -39,17 +39,14 @@ int main(void)
 	int i;
 	pthread_t thr[THREADS];
 
-	// Creer tous les threads
 	for (i = 0; i < THREADS; i ++) {
 		if (pthread_create(& thr[i], NULL, thread_function, NULL) != 0)
 			exit(1);
 	}
 
-	// Attendre qu'ils soient tous termines
 	for (i = 0; i < THREADS; i ++)
 		pthread_join(thr[i], NULL);
 
-	// Afficher l'etat du compteur
 	fprintf(stdout, "Result:%d\n", _Counter);
 	return 0;
 }

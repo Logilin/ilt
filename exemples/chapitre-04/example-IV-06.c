@@ -1,7 +1,7 @@
 /****************************************************************************\
 ** Exemple de la formation "Temps-reel Linux et Xenomai"                    **
 **                                                                          **
-** Christophe Blaess 2010-2018                                              **
+** Christophe Blaess 2010-2020                                              **
 ** http://christophe.blaess.fr                                              **
 ** Licence GPLv2                                                            **
 \****************************************************************************/
@@ -11,31 +11,32 @@
 #include <mqueue.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
+
+
+#define BUFFER_SIZE 8192
 
 
 int main(int argc, char * argv[])
 {
 	mqd_t mq;
-	int priority;
+	unsigned int priority;
+	char buffer[BUFFER_SIZE];
 
-	if ((argc != 4)
-	 || (sscanf(argv[2], "%d", &priority) != 1)) {
-		fprintf(stderr, "usage: %s mq_name priority message\n",
-		                 argv[0]);
+	if (argc != 2) {
+		fprintf(stderr, "usage: %s mq_name\n", argv[0]);
 		exit(EXIT_FAILURE);
 	}
-
-	mq = mq_open(argv[1], O_CREAT | O_WRONLY, 0666, NULL);
+	mq = mq_open(argv[1], O_RDONLY);
 	if (mq == -1) {
 		perror(argv[1]);
 		exit(EXIT_FAILURE);
 	}
-
-	if (mq_send(mq, argv[3], strlen(argv[3]), priority) != 0) {
+	if (mq_receive(mq, buffer, BUFFER_SIZE, &priority) < 0) {
 		perror("mq_send");
 		exit(EXIT_FAILURE);
 	}
+	fprintf(stdout, "[%d] %s\n", priority, buffer);
+
 	return EXIT_SUCCESS;
 }
