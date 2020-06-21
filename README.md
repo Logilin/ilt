@@ -1,11 +1,13 @@
-ilt
-===
-(c) Christophe BLAESS 2001-2017
+# Realtime and Embedded Linux Systems
 
-Exemples de notre cours "Linux temps réel et embarqué"
+## Logilin training course
 
-Pour tout renseignement voir http://www.logilin.fr
+(c) Christophe BLAESS 2001-2020
 
-Version à jour sur http://www.github.com/Logilin/ilt/
+Up-to-date version of this examples on [Logilin Github repository](https://github.com/logilin/ilt/)
+
+See all our training sessions on [Logilin web site](https://www.logilin.fr)
+
+
 
 
