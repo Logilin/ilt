@@ -1,7 +1,7 @@
 /****************************************************************************\
 ** Exemple de la formation "Temps-reel Linux et Xenomai"                    **
 **                                                                          **
-** Christophe Blaess 2010-2018                                              **
+** Christophe Blaess 2010-2020                                              **
 ** http://christophe.blaess.fr                                              **
 ** Licence GPLv2                                                            **
 \****************************************************************************/
@@ -27,7 +27,7 @@ static unsigned long long int _After_switch;;
 static unsigned long long int _Switch_durations[MAX_SWITCHES];
 
 
-void thread_function_1 (void * unused)
+void thread_function_1 (void *unused)
 {
 	(void) unused;
 
@@ -42,7 +42,7 @@ void thread_function_1 (void * unused)
 }
 
 
-void thread_function_2 (void * unused)
+void thread_function_2 (void *unused)
 {
 	(void) unused;
 

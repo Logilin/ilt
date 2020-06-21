@@ -5,28 +5,32 @@
 
 #include <rtdm/driver.h>
 
-// GPIO IN 23 -> Broche 16
+// Input on Raspberry Pi pin #16, GPIO 23
 #define GPIO_IN  23
-// GPIO OUT 22 -> Broche 15
+
+// Output on Raspberry Pi pin #15 GPIO 22
 #define GPIO_OUT 22
 
 static rtdm_irq_t irq_rtdm;
 
 
-static int handler_interruption(rtdm_irq_t * irq)
+static int irq_handler(rtdm_irq_t *irq)
 {
 	static int value = 0;
+
 	gpio_set_value(GPIO_OUT, value);
 	value = 1 - value;
+
 	return RTDM_IRQ_HANDLED;
 }
 
 
-static int __init exemple_init (void)
+
+static int __init example_init (void)
 {
 	int err;
 
-	int numero_interruption = gpio_to_irq(GPIO_IN);
+	int irq_num = gpio_to_irq(GPIO_IN);
 
 	if ((err = gpio_request(GPIO_IN, THIS_MODULE->name)) != 0) {
 		return err;
@@ -45,10 +49,10 @@ static int __init exemple_init (void)
 		return err;
 	}
 
-	irq_set_irq_type(numero_interruption,  IRQF_TRIGGER_RISING);
+	irq_set_irq_type(irq_num,  IRQF_TRIGGER_RISING);
 
-	if ((err = rtdm_irq_request(& irq_rtdm,
-	                 numero_interruption, handler_interruption,
+	if ((err = rtdm_irq_request(&irq_rtdm,
+	                 irs_num, irs_handler,
 	                 RTDM_IRQTYPE_EDGE,
 	                 THIS_MODULE->name, NULL)) != 0) {
 		gpio_free(GPIO_OUT);
@@ -61,15 +65,15 @@ static int __init exemple_init (void)
 
 
 
-static void __exit exemple_exit (void)
+static void __exit example_exit (void)
 {
-	rtdm_irq_free(& irq_rtdm);
+	rtdm_irq_free(&irq_rtdm);
 	gpio_free(GPIO_OUT);
 	gpio_free(GPIO_IN);
 }
 
 
-module_init(exemple_init);
-module_exit(exemple_exit);
+module_init(example_init);
+module_exit(example_exit);
 MODULE_LICENSE("GPL");
 

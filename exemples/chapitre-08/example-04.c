@@ -1,7 +1,7 @@
 /****************************************************************************\
 ** Exemple de la formation "Temps-reel Linux et Xenomai"                    **
 **                                                                          **
-** Christophe Blaess 2010-2018                                              **
+** Christophe Blaess 2010-2020                                              **
 ** http://christophe.blaess.fr                                              **
 ** Licence GPLv2                                                            **
 \****************************************************************************/
@@ -95,7 +95,7 @@ void thread_function_3(void *unused)
 
 
 
-int main(int argc, char * argv [])
+int main(int argc, char *argv[])
 {
 	int err;
 	RT_TASK task;

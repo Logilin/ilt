@@ -1,7 +1,7 @@
 /****************************************************************************\
 ** Exemple de la formation "Temps-reel Linux et Xenomai"                    **
 **                                                                          **
-** Christophe Blaess 2010-2018                                              **
+** Christophe Blaess 2010-2020                                              **
 ** http://christophe.blaess.fr                                              **
 ** Licence GPLv2                                                            **
 \****************************************************************************/
@@ -17,7 +17,7 @@
 #include <alchemy/timer.h>
 
 
-void periodic_task (void * arg)
+void periodic_task (void *arg)
 {
 	RTIME previous = 0;
 	RTIME now = 0;
@@ -68,7 +68,7 @@ void periodic_task (void * arg)
 
 
 
-int main(int argc, char * argv[])
+int main(int argc, char *argv[])
 {
 	RT_TASK task;
 	RTIME period;

@@ -2,8 +2,8 @@
 EXTRA_CFLAGS := -I /usr/xenomai/include/
 
 ifneq (${KERNELRELEASE},)
-	obj-m += irq-gpio-rtdm.o
-	obj-m += oscillateur-gpio-rtdm.o
+	obj-m += rtdm-gpio-irq.o
+	obj-m += rtdm-gpio-period.o
 
 else
 	KERNEL_DIR = /lib/modules/$(shell uname -r)/build
