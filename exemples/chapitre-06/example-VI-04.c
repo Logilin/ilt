@@ -1,7 +1,7 @@
 /****************************************************************************\
 ** Exemple de la formation "Temps-reel Linux et Xenomai"                    **
 **                                                                          **
-** Christophe Blaess 2010-2018                                              **
+** Christophe Blaess 2010-2020                                              **
 ** http://christophe.blaess.fr                                              **
 ** Licence GPLv2                                                            **
 \****************************************************************************/
@@ -55,14 +55,15 @@ void sigalrm_handler(int unused)
 	previous = now;
 	measure ++;
 	if (measure == _Nb_measure_per_interval) {
-		fprintf(stdout, "Min.= %lld, Moy.=%lld, Max.=%lld,  Max.Max.=%lld\n",
+		fprintf(stdout, "Min.= %lld, Avg.=%lld, Max.=%lld,  Max.Max.=%lld\n",
 			min, sum / _Nb_measure_per_interval, max, max_max);
 		measure = -1;
 	}
 }
 
 
-int main (int argc, char * argv[])
+
+int main (int argc, char *argv[])
 {
 	long int period;
 	timer_t tmr;

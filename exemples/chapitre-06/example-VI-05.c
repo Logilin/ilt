@@ -1,7 +1,7 @@
 /****************************************************************************\
 ** Exemple de la formation "Temps-reel Linux et Xenomai"                    **
 **                                                                          **
-** Christophe Blaess 2010-2018                                              **
+** Christophe Blaess 2010-2020                                              **
 ** http://christophe.blaess.fr                                              **
 ** Licence GPLv2                                                            **
 \****************************************************************************/
@@ -13,14 +13,14 @@
 #include <linux/gpio.h>
 
 
-static irqreturn_t my_irq_handler(int irq, void * ident);
+static irqreturn_t my_irq_handler(int irq, void *ident);
 
 
-// L'entree se fait depuis la broche 16 (GPIO 23).
+// Input from Raspberry Pi pin #16 (GPIO 23).
 #define RPI_IRQ_GPIO_IN  23
 
 
-// La sortie va sur la broche 18 (GPIO 24).
+//Output on Raspberry Pi pin #18 (GPIO 24).
 #define RPI_IRQ_GPIO_OUT 24
 
 
@@ -31,27 +31,23 @@ static int __init my_module_init (void)
 	if ((err = gpio_request(RPI_IRQ_GPIO_OUT, THIS_MODULE->name)) != 0)
 		return err;
 
-	// Demander l'acces au GPIO d'entree.
 	if ((err = gpio_request(RPI_IRQ_GPIO_IN, THIS_MODULE->name)) != 0) {
 		gpio_free(RPI_IRQ_GPIO_OUT);
 		return err;
 	}
 
-	// Configurer la direction du GPIO de sortie.
 	if ((err = gpio_direction_output(RPI_IRQ_GPIO_OUT,1)) != 0) {
 		gpio_free(RPI_IRQ_GPIO_OUT);
 		gpio_free(RPI_IRQ_GPIO_IN);
 		return err;
 	}
 
-	// Configurer la direction du GPIO d'entree.
 	if ((err = gpio_direction_input(RPI_IRQ_GPIO_IN)) != 0) {
 		gpio_free(RPI_IRQ_GPIO_OUT);
 		gpio_free(RPI_IRQ_GPIO_IN);
 		return err;
 	}
 
-	// Installer le handler d'interruption.
 	if ((err = request_irq(gpio_to_irq(RPI_IRQ_GPIO_IN),
 	                       my_irq_handler,
 	                       IRQF_SHARED | IRQF_TRIGGER_RISING,
@@ -69,17 +65,15 @@ static int __init my_module_init (void)
 
 static void __exit my_module_exit (void)
 {
-	// Retrait du handler d'interruption.
 	free_irq(gpio_to_irq(RPI_IRQ_GPIO_IN), THIS_MODULE->name);
 
-	// Liberation des GPIO.
 	gpio_free(RPI_IRQ_GPIO_OUT);
 	gpio_free(RPI_IRQ_GPIO_IN);
 }
 
 
 
-static irqreturn_t my_irq_handler(int irq, void * ident)
+static irqreturn_t my_irq_handler(int irq, void *ident)
 {
 	static int out_value = 0;
 

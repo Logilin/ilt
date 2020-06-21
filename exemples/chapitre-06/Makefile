@@ -1,22 +1,22 @@
 ##############################################################################
 ## Exemple de la formation "Temps-reel Linux et Xenomai"
 ##
-## Christophe Blaess 2010-2018
+## Christophe Blaess 2010-2020
 ## http://christophe.blaess.fr
 ## Licence GPLv2
 ##############################################################################
 
 APPLICATIONS:=      \
-  exemple-VI-01    \
-  exemple-VI-02    \
-  exemple-VI-03    \
-  exemple-VI-04    \
-  exemple-VI-07    \
-  exemple-VI-08    \
-  exemple-VI-09    \
-  exemple-VI-10    \
-  exemple-VI-11    \
-  exemple-VI-12    \
+  example-VI-01    \
+  example-VI-02    \
+  example-VI-03    \
+  example-VI-04    \
+  example-VI-07    \
+  example-VI-08    \
+  example-VI-09    \
+  example-VI-10    \
+  example-VI-11    \
+  example-VI-12    \
 
 
 ifneq (${KERNELRELEASE},)

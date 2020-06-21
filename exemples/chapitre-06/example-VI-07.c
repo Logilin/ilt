@@ -1,7 +1,7 @@
 /****************************************************************************\
 ** Exemple de la formation "Temps-reel Linux et Xenomai"                    **
 **                                                                          **
-** Christophe Blaess 2010-2018                                              **
+** Christophe Blaess 2010-2020                                              **
 ** http://christophe.blaess.fr                                              **
 ** Licence GPLv2                                                            **
 \****************************************************************************/
@@ -16,20 +16,17 @@
 
 #define LOOPS 500000000
 
-pthread_barrier_t _Barrier;
 
-
-void * thread_function (void * unused)
+void *thread_function (void *num)
 {
 	int i;
-	time_t debut, fin;
+	time_t start, end;
 
-	pthread_barrier_wait(&_Barrier);
-	debut = time(NULL);
+	start = time(NULL);
 	for (i = 0; i < LOOPS; i ++)
 		;
-	fin = time(NULL);
-	fprintf(stderr, "%ld -> %ld\n", debut, fin);
+	end = time(NULL);
+	fprintf(stderr, "%ld -> %ld\n", start, end);
 	return NULL;
 }
 
@@ -43,7 +40,6 @@ int main(void)
 	struct sched_param param;
 	int i;
 
-	pthread_barrier_init(&_Barrier, NULL, NB);
 	pthread_attr_init(& attr);
 	pthread_attr_setschedpolicy(& attr, SCHED_RR);
 	param.sched_priority = 10;

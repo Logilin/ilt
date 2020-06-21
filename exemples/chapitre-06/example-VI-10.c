@@ -1,7 +1,7 @@
 /****************************************************************************\
 ** Exemple de la formation "Temps-reel Linux et Xenomai"                    **
 **                                                                          **
-** Christophe Blaess 2010-2018                                              **
+** Christophe Blaess 2010-2020                                              **
 ** http://christophe.blaess.fr                                              **
 ** Licence GPLv2                                                            **
 \****************************************************************************/
@@ -13,7 +13,6 @@
 #include <pthread.h>
 #include <sys/time.h>
 
-
 pthread_mutex_t _Mutex;
 pthread_t _Thread_1, _Thread_2, _Thread_3;
 pthread_attr_t _Attr_1, _Attr_2, _Attr_3;
@@ -22,7 +21,7 @@ pthread_attr_t _Attr_1, _Attr_2, _Attr_3;
 #define LOOPS 500000000
 
 
-void * thread_function_3(void * unused)
+void *thread_function_3(void *unused)
 {
 	int i;
 
@@ -41,7 +40,7 @@ void * thread_function_3(void * unused)
 }
 
 
-void * thread_function_2(void * unused)
+void *thread_function_2(void *unused)
 {
 	int i;
 
@@ -55,7 +54,7 @@ void * thread_function_2(void * unused)
 
 
 
-void * thread_function_1(void *unused)
+void *thread_function_1(void *unused)
 {
 	fprintf(stderr, "T1 starts.\n");
 
@@ -77,11 +76,15 @@ void * thread_function_1(void *unused)
 
 
 
-int main(int argc, char * argv [])
+int main(int argc, char *argv[])
 {
 	struct sched_param param;
+	pthread_mutexattr_t attr;
 
-	pthread_mutex_init(&_Mutex, NULL);
+	pthread_mutexattr_init(&attr);
+	pthread_mutexattr_setprotocol (&attr, PTHREAD_PRIO_INHERIT);
+	pthread_mutex_init(&_Mutex, &attr);
+
 	pthread_attr_init(&_Attr_1);
 	pthread_attr_init(&_Attr_2);
 	pthread_attr_init(&_Attr_3);
