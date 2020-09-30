@@ -15,7 +15,7 @@ int main(void)
 		time(& tm);
 		fprintf(fp, "%s", ctime(& tm));
 		fflush(fp);
-		sleep(1);	
+		sleep(1);
 	}
 	return EXIT_FAILURE;
 }

@@ -1,5 +1,5 @@
 /****************************************************************************\
-** Exemple de la formation "Temps-reel Linux et Xenomai                     **
+** Exemple de la formation "Temps-reel sous Linux"                          **
 **                                                                          **
 ** Christophe Blaess 2012-2020                                              **
 ** http://christophe.blaess.fr                                              **
