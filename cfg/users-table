@@ -1,1 +1,1 @@
-rpi -1 users -1 =rpi /home/rpi /bin/sh - Raspberry Pi user
+guest -1 users -1 =guest /home/guest /bin/sh - Guest User
