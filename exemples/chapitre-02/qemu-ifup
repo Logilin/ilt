@@ -1,0 +1,5 @@
+#! /bin/sh
+
+# This is the address of the host side of th TUN/TAP interface.
+ip addr add dev $1 192.168.1.100/24
+ip link set dev $1 up
