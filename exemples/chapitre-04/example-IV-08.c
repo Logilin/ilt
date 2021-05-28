@@ -1,7 +1,7 @@
 /****************************************************************************\
 ** Exemple de la formation "Temps-reel sous Linux"                          **
 **                                                                          **
-** Christophe Blaess 2012-2020                                              **
+** Christophe Blaess 2012-2021                                              **
 ** http://christophe.blaess.fr                                              **
 ** Licence GPLv2                                                            **
 \****************************************************************************/
