@@ -1,11 +1,10 @@
 /****************************************************************************\
 ** Exemple de la formation "Temps-reel sous Linux et Xenomai"               **
 **                                                                          **
-** Christophe Blaess 2010-2021                                              **
+** Christophe Blaess 2010-2022                                              **
 ** http://christophe.blaess.fr                                              **
 ** Licence GPLv2                                                            **
 \****************************************************************************/
-
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,13 +12,11 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-
 #define LINE_LENGTH 80
-
 
 int main(void)
 {
-	char line [LINE_LENGTH];
+	char line[LINE_LENGTH + 1];
 
 	while (1) {
 		fprintf(stderr, "--> ");

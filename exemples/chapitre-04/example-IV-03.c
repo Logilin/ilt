@@ -1,11 +1,10 @@
 /****************************************************************************\
 ** Exemple de la formation "Temps-reel sous Linux"                          **
 **                                                                          **
-** Christophe Blaess 2010-2021                                              **
+** Christophe Blaess 2010-2022                                              **
 ** http://christophe.blaess.fr                                              **
 ** Licence GPLv2                                                            **
 \****************************************************************************/
-
 
 #include <pthread.h>
 #include <stdio.h>
@@ -29,7 +28,6 @@ void *thread_function (void *arg)
 
 
 #define THREADS 5
-
 
 int main(void)
 {

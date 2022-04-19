@@ -1,17 +1,15 @@
 /****************************************************************************\
 ** Exemple de la formation "Temps-reel sous Linux"                          **
 **                                                                          **
-** Christophe Blaess 2010-2021                                              **
+** Christophe Blaess 2010-2022                                              **
 ** http://christophe.blaess.fr                                              **
 ** Licence GPLv2                                                            **
 \****************************************************************************/
-
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
-
 
 int main(void)
 {

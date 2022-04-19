@@ -1,11 +1,10 @@
 /****************************************************************************\
 ** Exemple de la formation "Temps-reel sous Linux"                          **
 **                                                                          **
-** Christophe Blaess 2010-2021                                              **
+** Christophe Blaess 2010-2022                                              **
 ** http://christophe.blaess.fr                                              **
 ** Licence GPLv2                                                            **
 \****************************************************************************/
-
 
 #define _GNU_SOURCE
 
@@ -16,7 +15,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
-
 
 #define LOOPS 500000000
 

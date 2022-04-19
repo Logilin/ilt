@@ -1,11 +1,10 @@
 /****************************************************************************\
 ** Exemple de la formation "Temps-reel sous Linux"                          **
 **                                                                          **
-** Christophe Blaess 2010-2021                                              **
+** Christophe Blaess 2010-2022                                              **
 ** http://christophe.blaess.fr                                              **
 ** Licence GPLv2                                                            **
 \****************************************************************************/
-
 
 #include <fcntl.h>
 #include <mqueue.h>
@@ -13,15 +12,13 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-
 #define BUFFER_SIZE 8192
-
 
 int main(int argc, char * argv[])
 {
 	mqd_t mq;
 	unsigned int priority;
-	char buffer[BUFFER_SIZE];
+	char buffer[BUFFER_SIZE + 1];
 
 	if (argc != 2) {
 		fprintf(stderr, "usage: %s mq_name\n", argv[0]);
