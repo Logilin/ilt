@@ -14,12 +14,12 @@
 #include <unistd.h>
 
 
-#define LOOPS 500000000
+#define LOOPS 1000000000
 
 
 void *thread_function (void *num)
 {
-	int i;
+	unsigned int i;
 	time_t start, end;
 
 	start = time(NULL);

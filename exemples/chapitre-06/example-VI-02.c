@@ -15,7 +15,7 @@
 #include <unistd.h>
 
 
-#define LOOPS 500000000
+#define LOOPS 1000000000
 
 
 void *thread_function(void *arg)
@@ -23,7 +23,7 @@ void *thread_function(void *arg)
 	long int cpu = (long int) arg;
 	cpu_set_t cpu_set;
 	struct sched_param param;
-	int i;
+	unsigned int i;
 
 	CPU_ZERO(& cpu_set);
 	CPU_SET(cpu, & cpu_set);

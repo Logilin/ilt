@@ -14,14 +14,14 @@
 #include <unistd.h>
 
 
-#define LOOPS 500000000
+#define LOOPS 1000000000
 
 pthread_barrier_t _Barrier;
 
 
 void *thread_function (void *unused)
 {
-	int i;
+	unsigned int i;
 	time_t debut, fin;
 
 	pthread_barrier_wait(&_Barrier);

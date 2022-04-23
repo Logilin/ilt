@@ -18,12 +18,12 @@ pthread_t _Thread_1, _Thread_2, _Thread_3;
 pthread_attr_t _Attr_1, _Attr_2, _Attr_3;
 
 
-#define LOOPS 500000000
+#define LOOPS 1000000000
 
 
 void *thread_function_3(void *unused)
 {
-	int i;
+	unsigned int i;
 
 	fprintf(stderr, "        T3 starts.\n");
 	fprintf(stderr, "        T3 waits for the mutex.\n");
@@ -42,7 +42,7 @@ void *thread_function_3(void *unused)
 
 void *thread_function_2(void *unused)
 {
-	int i;
+	unsigned int i;
 
 	fprintf(stderr, "    T2 starts.\n");
 	fprintf(stderr, "    T2 works...\n");
