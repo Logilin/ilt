@@ -16,7 +16,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#define LOOPS 500000000
+#define LOOPS 1000000000
 
 
 void * thread_function(void *);
@@ -55,7 +55,7 @@ int main(void)
 
 void * thread_function(void * arg)
 {
-	int i;
+	unsigned int i;
 	long num = (long) arg;
 
 	for (;;) {

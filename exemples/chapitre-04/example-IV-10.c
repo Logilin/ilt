@@ -14,13 +14,13 @@
 #include <time.h>
 #include <unistd.h>
 
-#define LOOPS 500000000
+#define LOOPS 1000000000
 
 int main(void)
 {
 	int cpu;
 	cpu_set_t cpu_set;
-	int i;
+	unsigned int i;
 
 	for (;;) {
 		for (cpu = 0; cpu < sysconf(_SC_NPROCESSORS_ONLN); cpu ++) {
