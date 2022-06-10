@@ -41,7 +41,7 @@ int main(int argc, char * argv[])
 		counter ++;
 	}
 
-	fprintf(stdout, "[%d] (nice = %2d) counter = %10lld\n", getpid(), nice_value, counter);
+	fprintf(stdout, "[%d] (nice =%+3d) counter = %10lld\n", getpid(), nice_value, counter);
 	return 0;
 }
 
