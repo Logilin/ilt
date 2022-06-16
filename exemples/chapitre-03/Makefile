@@ -9,7 +9,7 @@ CC=$(CROSS_COMPILE)gcc
 all: hello
 
 hello: hello.c
-	${CC} ${CFLAGS} hello.c -o hello
+	$(CC) $(CFLAGS) hello.c -o hello
 
 .PHONY: clean
 clean:
