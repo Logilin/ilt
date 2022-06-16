@@ -9,9 +9,9 @@
 
 CROSS_COMPILE ?=
 
-CC = ${CROSS_COMPILE}gcc
-AS = ${CROSS_COMPILE}as
-LD = ${CROSS_COMPILE}gcc
+CC = $(CROSS_COMPILE)gcc
+AS = $(CROSS_COMPILE)as
+LD = $(CROSS_COMPILE)gcc
 
 CFLAGS=-Wall -g -pthread
 LDFLAGS=-pthread
@@ -33,10 +33,10 @@ EXE:=                 \
 
 
 .PHONY: all
-all: ${EXE}
+all: $(EXE)
 
 
 .PHONY: clean
 clean::
-	rm -f ${EXE} *.o *~
+	rm -f $(EXE) *.o *~
 
