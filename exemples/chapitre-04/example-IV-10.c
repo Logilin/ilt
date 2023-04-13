@@ -14,23 +14,29 @@
 #include <time.h>
 #include <unistd.h>
 
-#define LOOPS 1000000000
 
 int main(void)
 {
 	int cpu;
-	cpu_set_t cpu_set;
-	unsigned int i;
+	int previous = -1;
+	time_t now;
+	struct tm * now_tm;
 
 	for (;;) {
-		for (cpu = 0; cpu < sysconf(_SC_NPROCESSORS_ONLN); cpu ++) {
-			CPU_ZERO(&cpu_set);
-			CPU_SET(cpu, &cpu_set);
-			sched_setaffinity(0, sizeof(cpu_set), &cpu_set);
-			fprintf(stderr, "[%d] CPU -> %d\n",
-			                 getpid(), sched_getcpu());
-			for (i = 0; i < LOOPS; i ++)
-				;
+		cpu = sched_getcpu();
+		if (cpu == -1) {
+			perror("sched_getcpu");
+			exit(EXIT_FAILURE);
+		}
+		if (previous == -1)
+			previous = cpu;
+		if (cpu != previous) {
+			now = time(NULL);
+			now_tm = localtime(&now);
+			fprintf(stdout, "%02d:%02d:%02d migration %d -> %d\n",
+			         now_tm->tm_hour, now_tm->tm_min, now_tm->tm_sec,
+			         previous, cpu);
+			previous = cpu;
 		}
 	}
 	return EXIT_SUCCESS;

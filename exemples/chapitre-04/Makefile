@@ -30,6 +30,7 @@ EXE:=                 \
   example-IV-09        \
   example-IV-10        \
   example-IV-11        \
+  example-IV-12        \
 
 
 .PHONY: all
