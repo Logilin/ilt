@@ -13,17 +13,16 @@
 #include <unistd.h>
 #include <sys/mman.h>
 
-struct mutexed_counter {
+struct mtx_counter {
 	int              counter;
 	pthread_mutex_t  mutex;
 };
 
 
-
 int main(int argc, char * argv[])
 {
 	int fd;
-	struct mutexed_counter *cnt;
+	struct mtx_counter *cnt;
 	pthread_mutexattr_t attr;
 
 	if (argc != 2) {
@@ -36,15 +35,15 @@ int main(int argc, char * argv[])
 			perror(argv[1]);
 			exit(EXIT_FAILURE);
 		}
-		ftruncate(fd, sizeof(struct mutexed_counter));
-		cnt = mmap(NULL, sizeof(struct mutexed_counter), PROT_READ|PROT_WRITE,
+		ftruncate(fd, sizeof(struct mtx_counter));
+		cnt = mmap(NULL, sizeof(struct mtx_counter), PROT_READ|PROT_WRITE,
 		                MAP_SHARED, fd, 0);
 		cnt->counter = 0;
 		pthread_mutexattr_init(&attr);
 		pthread_mutexattr_setpshared(&attr, PTHREAD_PROCESS_SHARED);
 		pthread_mutex_init(&(cnt->mutex), &attr);
 	} else {
-		cnt = mmap(NULL, sizeof(struct mutexed_counter), PROT_READ|PROT_WRITE,
+		cnt = mmap(NULL, sizeof(struct mtx_counter), PROT_READ|PROT_WRITE,
 		                MAP_SHARED, fd, 0);
 	}
 
