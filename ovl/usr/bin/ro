@@ -1,4 +1,0 @@
-#! /bin/sh
-
-mount / -o ro,remount
-
