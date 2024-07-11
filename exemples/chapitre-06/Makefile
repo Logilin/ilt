@@ -1,7 +1,7 @@
 ##############################################################################
 ## Exemple de la formation "Temps-reel sous Linux"
 ##
-## Christophe Blaess 2010-2023
+## Christophe Blaess 2010-2024
 ## http://christophe.blaess.fr
 ## Licence GPLv2
 ##############################################################################
@@ -27,12 +27,12 @@ ifneq ($(KERNELRELEASE),)
 
 else
 
-CFLAGS=-Wall -g -pthread
-LDFLAGS=-pthread
-LOADLIBES=-lrt
-CC = $(CROSS_COMPILE)gcc
-AS = $(CROSS_COMPILE)as
-LD = $(CROSS_COMPILE)gcc
+CFLAGS += -Wall -g -pthread
+LDFLAGS += -pthread
+LOADLIBES += -lrt
+CC ?= $(CROSS_COMPILE)gcc
+AS ?= $(CROSS_COMPILE)as
+LD ?= $(CROSS_COMPILE)gcc
 
 	CROSS_COMPILE ?=
 	ARCH          ?=
