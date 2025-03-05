@@ -1,7 +1,7 @@
 ##############################################################################
 ## Exemple de la formation "Temps-reel sous Linux"
 ##
-## Christophe Blaess 2010-2024
+## Christophe Blaess 2010-2025
 ## http://christophe.blaess.fr
 ## Licence GPLv2
 ##############################################################################
