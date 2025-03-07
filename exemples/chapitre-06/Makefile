@@ -6,7 +6,7 @@
 ## Licence GPLv2
 ##############################################################################
 
-APPLICATIONS:=      \
+APPLICATIONS:=     \
   example-VI-01    \
   example-VI-02    \
   example-VI-03    \
@@ -21,8 +21,8 @@ APPLICATIONS:=      \
 
 ifneq ($(KERNELRELEASE),)
 
-  obj-m += exemple-VI-05.o
-  obj-m += exemple-VI-06.o
+  obj-m += example-VI-05.o
+  obj-m += example-VI-06.o
 
 
 else
@@ -30,21 +30,20 @@ else
 CFLAGS += -Wall -g -pthread
 LDFLAGS += -pthread
 LOADLIBES += -lrt
-CC ?= $(CROSS_COMPILE)gcc
-AS ?= $(CROSS_COMPILE)as
-LD ?= $(CROSS_COMPILE)gcc
 
-	CROSS_COMPILE ?=
-	ARCH          ?=
-	KERNEL_DIR    ?= /lib/modules/$(shell uname -r)/build
-	MODULE_DIR    := $(shell pwd)
+CROSS_COMPILE ?=
+ARCH          ?=
+KERNEL_DIR    ?= /lib/modules/$(shell uname -r)/build
+MODULE_DIR    := $(shell pwd)
+
+CC = $(CROSS_COMPILE)gcc
 
 .PHONY: all
 all: $(APPLICATIONS)
 
 .PHONY: modules
 modules:
-	$(MAKE) arch=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) -C $(KERNEL_DIR) SUBDIRS=$(MODULE_DIR)  modules
+	$(MAKE) arch=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) -C $(KERNEL_DIR) M=$(MODULE_DIR)  modules
 
 .PHONY: clean
 clean:
