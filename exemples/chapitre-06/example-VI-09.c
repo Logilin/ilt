@@ -19,7 +19,7 @@ pthread_t _Thread_1, _Thread_2, _Thread_3;
 pthread_attr_t _Attr_1, _Attr_2, _Attr_3;
 
 
-#define LOOPS 1000000000
+unsigned long Loops = 0;
 
 
 void *thread_function_3(void *unused)
@@ -31,7 +31,7 @@ void *thread_function_3(void *unused)
 	pthread_mutex_lock(&_Mutex);
 	fprintf(stderr, "        T3 holds the mutex.\n");
 	fprintf(stderr, "        T3 works...\n");
-	for (i = 0; i < LOOPS; i ++)
+	for (i = 0; i < Loops; i ++)
 		;
 	fprintf(stderr, "        T3 releases the mutex.\n");
 	pthread_mutex_unlock(&_Mutex);
@@ -47,7 +47,7 @@ void *thread_function_2(void *unused)
 
 	fprintf(stderr, "    T2 starts.\n");
 	fprintf(stderr, "    T2 works...\n");
-	for (i = 0; i < LOOPS; i ++)
+	for (i = 0; i < Loops; i ++)
 		;
 	fprintf(stderr, "    T2 terminates.\n");
 	return NULL;
@@ -80,6 +80,12 @@ void *thread_function_1(void *unused)
 int main(int argc, char *argv[])
 {
 	struct sched_param param;
+
+	if ((argc != 2)
+	 || (sscanf(argv[1], "%lu", &Loops) != 1)) {
+		fprintf(stderr, "Usage: %s <loops>\n", argv[0]);
+		exit(EXIT_FAILURE);
+	}
 
 	pthread_mutex_init(&_Mutex, NULL);
 	pthread_attr_init(&_Attr_1);

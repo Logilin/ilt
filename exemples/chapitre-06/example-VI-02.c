@@ -15,7 +15,7 @@
 #include <unistd.h>
 
 
-#define LOOPS 1000000000
+unsigned long Loops = 0;
 
 
 void *thread_function(void *arg)
@@ -40,16 +40,22 @@ void *thread_function(void *arg)
 
 	fprintf(stderr, "Thread sur CPU %ld va demarrer...\n", cpu);
 	sleep(1);
-	for (i = 0; i < LOOPS; i++)
+	for (i = 0; i < Loops; i++)
 		;
 	return NULL;
 }
 
 
-int main(void)
+int main(int argc, char *argv[])
 {
 	long int cpu;
 	pthread_t thr;
+
+	if ((argc != 2)
+	 || (sscanf(argv[1], "%lu", &Loops) != 1)) {
+		fprintf(stderr, "Usage: %s <loops>\n", argv[0]);
+		exit(EXIT_FAILURE);
+	}
 
 	for (cpu = 0; cpu < sysconf(_SC_NPROCESSORS_ONLN); cpu ++)
 		pthread_create(&thr, NULL, thread_function, (void *) cpu);

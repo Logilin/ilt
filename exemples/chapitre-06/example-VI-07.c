@@ -14,7 +14,7 @@
 #include <unistd.h>
 
 
-#define LOOPS 1000000000
+unsigned long Loops = 0;
 
 
 void *thread_function (void *num)
@@ -23,7 +23,7 @@ void *thread_function (void *num)
 	time_t start, end;
 
 	start = time(NULL);
-	for (i = 0; i < LOOPS; i ++)
+	for (i = 0; i < Loops; i ++)
 		;
 	end = time(NULL);
 	fprintf(stderr, "%ld -> %ld\n", start, end);
@@ -33,12 +33,18 @@ void *thread_function (void *num)
 
 #define NB 4
 
-int main(void)
+int main(int argc, char *argv[])
 {
 	pthread_t thr[NB];
 	pthread_attr_t attr;
 	struct sched_param param;
 	int i;
+
+	if ((argc != 2)
+	 || (sscanf(argv[1], "%lu", &Loops) != 1)) {
+		fprintf(stderr, "Usage: %s <loops>\n", argv[0]);
+		exit(EXIT_FAILURE);
+	}
 
 	pthread_attr_init(& attr);
 	pthread_attr_setschedpolicy(& attr, SCHED_RR);

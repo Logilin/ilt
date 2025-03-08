@@ -14,13 +14,19 @@
 #include <time.h>
 #include <unistd.h>
 
-#define LOOPS 1000000000
+unsigned long Loops = 0;
 
-int main(void)
+int main(int argc, char *argv[])
 {
 	int cpu;
 	cpu_set_t cpu_set;
 	unsigned int i;
+
+	if ((argc != 2)
+	 || (sscanf(argv[1], "%lu", &Loops) != 1)) {
+		fprintf(stderr, "Usage: %s <loops>\n", argv[0]);
+		exit(EXIT_FAILURE);
+	}
 
 	for (;;) {
 		for (cpu = 0; cpu < sysconf(_SC_NPROCESSORS_ONLN); cpu ++) {
@@ -29,7 +35,7 @@ int main(void)
 			sched_setaffinity(0, sizeof(cpu_set), &cpu_set);
 			fprintf(stderr, "[%d] CPU -> %d\n",
 			                 getpid(), sched_getcpu());
-			for (i = 0; i < LOOPS; i ++)
+			for (i = 0; i < Loops; i ++)
 				;
 		}
 	}

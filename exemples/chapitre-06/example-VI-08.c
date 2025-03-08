@@ -14,7 +14,7 @@
 #include <unistd.h>
 
 
-#define LOOPS 1000000000
+unsigned long Loops = 0;
 
 pthread_barrier_t _Barrier;
 
@@ -26,7 +26,7 @@ void *thread_function (void *unused)
 
 	pthread_barrier_wait(&_Barrier);
 	debut = time(NULL);
-	for (i = 0; i < LOOPS; i ++)
+	for (i = 0; i < Loops; i ++)
 		;
 	fin = time(NULL);
 	fprintf(stderr, "%ld -> %ld\n", debut, fin);
@@ -36,12 +36,18 @@ void *thread_function (void *unused)
 
 #define NB 4
 
-int main(void)
+int main(int argc, char *argv[])
 {
 	pthread_t thr[NB];
 	pthread_attr_t attr;
 	struct sched_param param;
 	int i;
+
+	if ((argc != 2)
+	 || (sscanf(argv[1], "%lu", &Loops) != 1)) {
+		fprintf(stderr, "Usage: %s <loops>\n", argv[0]);
+		exit(EXIT_FAILURE);
+	}
 
 	pthread_barrier_init(&_Barrier, NULL, NB);
 	pthread_attr_init(& attr);

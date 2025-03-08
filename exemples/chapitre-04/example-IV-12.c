@@ -16,18 +16,24 @@
 #include <time.h>
 #include <unistd.h>
 
-#define LOOPS 1000000000
-
+unsigned long int Loops = 1000000000;
 
 void * thread_function(void *);
 
-int main(void)
+int main(int argc, char *argv[])
 {
 	long            i;
 	pthread_t *     threads;
 	pthread_attr_t  attr;
 	cpu_set_t       cpu_set;
 	int             nb_cpus;
+
+	if (argc >= 2) {
+		if (sscanf(argv[1], "%lu", &Loops) != 1) {
+			fprintf(stderr, "Usage: %s [loops]\n", argv[0]);
+			exit(EXIT_FAILURE);
+		}
+	}
 
 	nb_cpus = sysconf(_SC_NPROCESSORS_ONLN);
 	threads = calloc(nb_cpus, sizeof(pthread_t));
@@ -55,11 +61,10 @@ int main(void)
 
 void * thread_function(void * arg)
 {
-	unsigned int i;
 	long num = (long) arg;
 
 	for (;;) {
-		for (i = 0 ; i < LOOPS; i ++)
+		for (unsigned long i = 0 ; i < Loops; i ++)
 			;
 		fprintf(stderr, "[%ld] CPU -> %d\n", num, sched_getcpu());
 		sleep(1);
