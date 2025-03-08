@@ -24,7 +24,7 @@ unsigned long Loops = 0;
 
 void *thread_function_3(void *unused)
 {
-	unsigned int i;
+	unsigned long int i;
 
 	fprintf(stderr, "        T3 starts.\n");
 	fprintf(stderr, "        T3 waits for the mutex.\n");
@@ -43,7 +43,7 @@ void *thread_function_3(void *unused)
 
 void *thread_function_2(void *unused)
 {
-	unsigned int i;
+	unsigned long int i;
 
 	fprintf(stderr, "    T2 starts.\n");
 	fprintf(stderr, "    T2 works...\n");

@@ -23,7 +23,7 @@ void *thread_function(void *arg)
 	long int cpu = (long int) arg;
 	cpu_set_t cpu_set;
 	struct sched_param param;
-	unsigned int i;
+	unsigned long int i;
 
 	CPU_ZERO(& cpu_set);
 	CPU_SET(cpu, & cpu_set);

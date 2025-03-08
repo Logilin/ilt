@@ -21,15 +21,15 @@ pthread_barrier_t _Barrier;
 
 void *thread_function (void *unused)
 {
-	unsigned int i;
-	time_t debut, fin;
+	unsigned long int i;
+	time_t start, end;
 
 	pthread_barrier_wait(&_Barrier);
-	debut = time(NULL);
+	start = time(NULL);
 	for (i = 0; i < Loops; i ++)
 		;
-	fin = time(NULL);
-	fprintf(stderr, "%ld -> %ld\n", debut, fin);
+	end = time(NULL);
+	fprintf(stderr, "%ld -> %ld\n", start, end);
 	return NULL;
 }
 

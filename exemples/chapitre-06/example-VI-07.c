@@ -19,7 +19,7 @@ unsigned long Loops = 0;
 
 void *thread_function (void *num)
 {
-	unsigned int i;
+	unsigned long int i;
 	time_t start, end;
 
 	start = time(NULL);

@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 {
 	int cpu;
 	cpu_set_t cpu_set;
-	unsigned int i;
+	unsigned long int i;
 
 	if ((argc != 2)
 	 || (sscanf(argv[1], "%lu", &Loops) != 1)) {
