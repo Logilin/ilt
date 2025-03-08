@@ -13,8 +13,19 @@
 #include <linux/gpio.h>
 
 
-#define RPI_IRQ_GPIO_IN  23
-#define RPI_IRQ_GPIO_OUT 24
+// Input from Raspberry Pi pin #16 (GPIO 23 / 535).
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 6, 0)
+	#define RPI_IRQ_GPIO_IN  535
+#else
+	#define RPI_IRQ_GPIO_IN  23
+#endif
+
+//Output on Raspberry Pi pin #18 (GPIO 24 / 536).
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 6, 0)
+	#define RPI_IRQ_GPIO_OUT 536
+#else
+	#define RPI_IRQ_GPIO_OUT 24
+#endif
 
 
 static irqreturn_t my_irq_handler(int irq, void *ident)
