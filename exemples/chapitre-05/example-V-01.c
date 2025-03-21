@@ -32,6 +32,11 @@ int main(int argc, char * argv[])
 		fprintf(stderr, "usage: %s nice_value\n", argv[0]);
 		exit(EXIT_FAILURE);
 	}
+	if ((nice_value < 0) && (geteuid() != 0)) {
+		fprintf(stderr, "%s: must be root for negative nice value.\n", argv[0]);
+		exit(EXIT_FAILURE);
+	}
+
 	nice(nice_value);
 
 	signal(SIGALRM, sigalrm_handler);
