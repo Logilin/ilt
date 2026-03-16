@@ -2,7 +2,7 @@
 
 ## Logilin training course
 
-(c) Christophe BLAESS 2001-2025
+(c) Christophe BLAESS 2001-2026
 
 Up-to-date version of this examples on [Logilin Github repository](https://github.com/logilin/ilt/)
 
