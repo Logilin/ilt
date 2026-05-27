@@ -6,20 +6,13 @@
 ## Licence GPLv2
 ##############################################################################
 
-APPLICATIONS:=     \
-  example-VI-01    \
-  example-VI-02    \
-  example-VI-03    \
-  example-VI-04    \
-
-
-ifneq ($(KERNELRELEASE),)
-
-  obj-m += example-VI-05.o
-  obj-m += example-VI-06.o
-
-
-else
+APPLICATIONS:=      \
+  example-VII-01    \
+  example-VII-02    \
+  example-VII-03    \
+  example-VII-04    \
+  example-VII-05    \
+  example-VII-06    \
 
 CFLAGS += -Wall -g -pthread
 LDFLAGS += -pthread
@@ -35,14 +28,9 @@ CC = $(CROSS_COMPILE)gcc
 .PHONY: all
 all: $(APPLICATIONS)
 
-.PHONY: modules
-modules:
-	$(MAKE) arch=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) -C $(KERNEL_DIR) M=$(MODULE_DIR)  modules
-
 .PHONY: clean
 clean:
 	rm -f $(APPLICATIONS) *.o *~
 	rm -f *.o *.ko *.mod.c modules.order Module.symvers
 	rm -rf .tmp_versions .*.cmd
 
-endif

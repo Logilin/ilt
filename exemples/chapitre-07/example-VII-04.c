@@ -6,13 +6,15 @@
 ** Licence GPLv2                                                            **
 \****************************************************************************/
 
+#define _GNU_SOURCE
+
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <pthread.h>
 #include <sys/time.h>
-
+#include <sys/resource.h>
 
 pthread_mutex_t _Mutex;
 pthread_t _Thread_1, _Thread_2, _Thread_3;
@@ -80,6 +82,7 @@ void *thread_function_1(void *unused)
 int main(int argc, char *argv[])
 {
 	struct sched_param param;
+	pthread_mutexattr_t attr;
 
 	if ((argc != 2)
 	 || (sscanf(argv[1], "%lu", &Loops) != 1)) {
@@ -87,7 +90,13 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 
-	pthread_mutex_init(&_Mutex, NULL);
+	struct rlimit limit = { RLIM_INFINITY, RLIM_INFINITY };
+	prlimit(0, RLIMIT_RTTIME, &limit, NULL);
+
+	pthread_mutexattr_init(&attr);
+	pthread_mutexattr_setprotocol (&attr, PTHREAD_PRIO_INHERIT);
+	pthread_mutex_init(&_Mutex, &attr);
+
 	pthread_attr_init(&_Attr_1);
 	pthread_attr_init(&_Attr_2);
 	pthread_attr_init(&_Attr_3);

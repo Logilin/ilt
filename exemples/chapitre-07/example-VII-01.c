@@ -6,25 +6,24 @@
 ** Licence GPLv2                                                            **
 \****************************************************************************/
 
+#define _GNU_SOURCE
 
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
+#include <sys/resource.h>
 
 
 unsigned long Loops = 0;
 
-pthread_barrier_t _Barrier;
 
-
-void *thread_function (void *unused)
+void *thread_function (void *num)
 {
 	unsigned long int i;
 	time_t start, end;
 
-	pthread_barrier_wait(&_Barrier);
 	start = time(NULL);
 	for (i = 0; i < Loops; i ++)
 		;
@@ -49,7 +48,9 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 
-	pthread_barrier_init(&_Barrier, NULL, NB);
+	struct rlimit limit = { RLIM_INFINITY, RLIM_INFINITY };
+	prlimit(0, RLIMIT_RTTIME, &limit, NULL);
+
 	pthread_attr_init(& attr);
 	pthread_attr_setschedpolicy(& attr, SCHED_RR);
 	param.sched_priority = 10;

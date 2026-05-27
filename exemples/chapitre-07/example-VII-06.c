@@ -6,12 +6,14 @@
 ** Licence GPLv2                                                            **
 \****************************************************************************/
 
+#define _GNU_SOURCE
 
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <pthread.h>
+#include <sys/resource.h>
 
 
 pthread_mutex_t _Mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -33,6 +35,9 @@ int main(int argc, char *argv[])
 	pthread_t  thr[2];
 	pthread_attr_t  attr;
 	struct sched_param  param;
+
+	struct rlimit limit = { RLIM_INFINITY, RLIM_INFINITY };
+	prlimit(0, RLIMIT_RTTIME, &limit, NULL);
 
 	pthread_mutex_lock(&_Mutex);
 
