@@ -6,12 +6,14 @@
 ** Licence GPLv2                                                            **
 \****************************************************************************/
 
+#define _GNU_SOURCE
 
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
+#include <sys/resource.h>
 
 
 static int _Nb_measure_per_interval = 0;
@@ -79,6 +81,9 @@ int main (int argc, char *argv[])
 		fprintf(stderr, "%s: the period must be in [1, 2000000]\n", argv[0]);
 		exit(EXIT_FAILURE);
 	}
+
+	struct rlimit limit = { RLIM_INFINITY, RLIM_INFINITY };
+	prlimit(0, RLIMIT_RTTIME, &limit, NULL);
 
 	_Nb_measure_per_interval = 2000000 / period; // Un affichage toutes les deux secondes environ
 

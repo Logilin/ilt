@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/time.h>
+#include <sys/resource.h>
 
 
 int main(void)
@@ -20,6 +21,9 @@ int main(void)
 	long long int max_duration = 0;
 	struct timeval previous;
 	struct timeval now;
+
+	struct rlimit limit = { RLIM_INFINITY, RLIM_INFINITY };
+	prlimit(0, RLIMIT_RTTIME, &limit, NULL);
 
 	gettimeofday (&now, NULL);
 	start = now.tv_sec;

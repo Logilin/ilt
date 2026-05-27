@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/resource.h>
 
 
 unsigned long Loops = 0;
@@ -50,6 +51,9 @@ int main(int argc, char *argv[])
 {
 	long int cpu;
 	pthread_t thr;
+
+	struct rlimit limit = { RLIM_INFINITY, RLIM_INFINITY };
+	prlimit(0, RLIMIT_RTTIME, &limit, NULL);
 
 	if ((argc != 2)
 	 || (sscanf(argv[1], "%lu", &Loops) != 1)) {

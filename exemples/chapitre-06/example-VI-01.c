@@ -6,12 +6,14 @@
 ** Licence GPLv2                                                            **
 \****************************************************************************/
 
+#define _GNU_SOURCE
 
 #include <sched.h>
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/resource.h>
 
 
 int _End_of_loop = 0;
@@ -36,6 +38,9 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "usage: %s priority\n", argv[0]);
 		exit(EXIT_FAILURE);
 	}
+
+	struct rlimit limit = { RLIM_INFINITY, RLIM_INFINITY };
+	prlimit(0, RLIMIT_RTTIME, &limit, NULL);
 
 	param.sched_priority = priority;
 	if (sched_setscheduler(0, SCHED_RR, &param) != 0) {
